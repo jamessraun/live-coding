@@ -21,15 +21,44 @@ methods.createArticle = function(req, res){
 }
 
 methods.getArticles = function(req, res){
-	Article.find({}, function(error, record){
-    if(error){
-      res.json({error})
-    } else {
-			res.json(record)
-    }
-  })
+	Article.find({})
+	.populate('author user')
+	.exec((error, records) =>{
+		if(error){
+			res.json(error)
+		}else {
+			res.json(records)
+		}
+	})
 }
 
+
+methods.getArticleById = function(req, res){
+	Article.findById({_id:req.params.id})
+	.populate('author user')
+	.exec((error, records) =>{
+		if(error){
+			res.json(error)
+		}else {
+			res.json(records)
+		}
+	})
+}
+
+methods.updateArticle = function(req, res){
+	Article.findByIdAndUpdate(req.params.id, {$set:req.body}, {new:true})
+	.then(response =>{
+		res.json(response)
+	})
+}
+
+
+methods.deleteArticle = function(req, res){
+	Article.findByIdAndRemove(req.params.id)
+	.then(response =>{
+		res.json(response)
+	})
+}
 
 
 module.exports = methods

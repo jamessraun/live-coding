@@ -21,6 +21,7 @@ methods.signin = function(req, res) {
 }
 
 methods.signup = function(req, res) {
+  console.log(req.body);
   let data = req.body
   data.password = bcrypt.hashSync(req.body.password, saltRounds);
   User.find({

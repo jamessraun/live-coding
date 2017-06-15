@@ -10,6 +10,10 @@ router.post('/signin', passport.authenticate('local', {session: false}), userCon
 
 
 router.get('/articles',articleController.getArticles)
+router.get('/articles/:id',articleController.getArticleById)
+router.post('/articles',helper.auth,articleController.createArticle)
+router.put('/articles/:id',helper.auth,articleController.updateArticle)
+router.delete('/articles/:id',helper.auth,articleController.deleteArticle)
 
 
 module.exports = router;
