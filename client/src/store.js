@@ -11,7 +11,7 @@ export const store = new Vuex.Store({
         //GETTERS//
     getters:{
       isLogin(state){
-        return state.is_login
+        return state.is_login;
       },
       listArticle(state){
         return state.list_Article;
@@ -32,14 +32,9 @@ export const store = new Vuex.Store({
         commit('changeIsLogin',value)
       },
       getListArticle({commit}){
-        let self = this
-        let token = window.localStorage.getItem('token');
-        axios.get('http://localhost:3000/articles',{
-          headers:{
-            token:token
-          }
-        })
+        axios.get('http://localhost:3000/articles')
         .then(response =>{
+          console.log('articless---------',response.data);
           commit('getListArticle',response.data)
         })
       }

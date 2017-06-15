@@ -5,7 +5,7 @@
       Home
     </a>
     <div class="right menu">
-      <a v-if="isLogin" class="ui item">
+      <a v-if="isLogin" class="ui item" @click="showProfile">
         Welcome, {{user}}
       </a>
       <a v-if="isLogin" class="ui item" @click="signOut">
@@ -46,11 +46,14 @@ export default {
     },
     showHome(){
       this.$router.push('/')
-    }
+    },
     signOut(){
       window.localStorage.removeItem('token')
       window.localStorage.removeItem('user')
       this.$router.push('/login')
+    },
+    showProfile(){
+      this.$router.push('/profile')
     }
   },
   created(){

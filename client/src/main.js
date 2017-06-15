@@ -5,6 +5,7 @@ require('semantic-ui-css/semantic.min.js')
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Navbar from './components/Navbar'
 
 
 import {store} from './store'
