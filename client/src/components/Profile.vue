@@ -75,7 +75,7 @@
         </div>
         <div class="actions">
           <div class="ui button" @click="closeModal">Cancel</div>
-          <div class="ui blue button" @click="editArticle()">Submit</div>
+          <div class="ui blue button" @click="editCurrentArticle()">Submit</div>
         </div>
       </div>
 
@@ -88,8 +88,8 @@ import {mapGetters} from 'vuex'
 
 export default {
   name: 'Home',
-  computed:{
 
+  computed:{
       ...mapGetters([
         'listArticle'
       ])
@@ -121,9 +121,9 @@ export default {
       let token = window.localStorage.getItem('token');
       console.log(token);
       axios.post('http://localhost:3000/articles',{
-        title:self.new_Article.title,
-        category:self.new_Article.category,
-        content:self.new_Article.content
+        title:self.new_article.title,
+        category:self.new_article.category,
+        content:self.new_article.content
       },{
           headers:{
             token:token
@@ -133,12 +133,12 @@ export default {
           self.$store.dispatch('getListArticle')
       })
     },
-    editArticle(){
+    editCurrentArticle(){
       console.log('masukk edit');
       let self = this
       let token = window.localStorage.getItem('token');
       console.log(this.editArticle.title);
-      axios.put('http://localhost:3000/articles',{
+      axios.put(`http://localhost:3000/articles/${this.editArticle._id}`,{
         title:self.editArticle.title,
         category:self.editArticle.category,
         content:self.editArticle.content
@@ -147,7 +147,7 @@ export default {
             token:token
           }
         }).then(response =>{
-          self.$store.dispatch('getListArticleByuser')
+          self.$store.dispatch('getListArticle')
           $('.modalShowEdit').modal('hide');
       })
     },
@@ -161,13 +161,14 @@ export default {
         }
       })
       .then(response =>{
-        self.$store.dispatch('getListArticle')
+        let user = window.localStorage.getItem('user')
+        self.$store.dispatch('getListArticleByUser',user)
       })
     }
 
   },
   created(){
-    this.$store.dispatch('getListArticle')
+    this.$store.dispatch('getListArticleByUser')
   }
 }
 
