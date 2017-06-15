@@ -11,7 +11,7 @@ methods.createArticle = function(req, res){
 		author : user_id
 	}
 
-	Articles.create( new_article, function(error, record){
+	Article.create( new_article, function(error, record){
     if(error){
       res.json({error})
     } else {
@@ -21,7 +21,7 @@ methods.createArticle = function(req, res){
 }
 
 methods.getArticles = function(req, res){
-	Articles.find({}, function(error, record){
+	Article.find({}, function(error, record){
     if(error){
       res.json({error})
     } else {
