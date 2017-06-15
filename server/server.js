@@ -5,7 +5,7 @@ const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-var index = require('../')
+var index = require('./routes/index')
 const app = express()
 
 
@@ -24,7 +24,7 @@ app.use('/',index);
 app.use(passport.initialize());
 
 passport.use(new Strategy(function(username, password, cb) {
-  let User = require('./models/users')
+  let User = require('./models/user')
   console.log(username,password);
   User.findOne({
   username: username
